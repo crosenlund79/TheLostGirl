@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/player/girl.gd" id="1_girl"]
+[ext_resource type="Script" path="res://src/player/girl_rig.gd" id="2_rig"]
+[ext_resource type="Script" path="res://src/player/girl_eyes.gd" id="3_eyes"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stand"]
+size = Vector2(16, 58)
+
+[node name="Girl" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+floor_snap_length = 6.0
+script = ExtResource("1_girl")
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -29)
+shape = SubResource("RectangleShape2D_stand")
+
+[node name="Rig" type="Node2D" parent="."]
+script = ExtResource("2_rig")
+
+[node name="Eyes" type="Node2D" parent="Rig"]
+z_index = 7
+script = ExtResource("3_eyes")

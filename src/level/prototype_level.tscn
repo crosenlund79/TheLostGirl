@@ -1,0 +1,340 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/level/prototype_level.gd" id="1_level"]
+[ext_resource type="PackedScene" path="res://src/player/girl.tscn" id="2_girl"]
+[ext_resource type="PackedScene" path="res://src/companion/dog.tscn" id="3_dog"]
+[ext_resource type="PackedScene" path="res://src/enemy/creature.tscn" id="4_creature"]
+[ext_resource type="Script" path="res://src/hiding/hide_cover.gd" id="5_cover"]
+[ext_resource type="Script" path="res://src/world/terrain_piece.gd" id="6_terrain"]
+[ext_resource type="Script" path="res://src/world/forest_layer.gd" id="7_forest"]
+[ext_resource type="Script" path="res://src/world/foreground_layer.gd" id="8_foreground"]
+[ext_resource type="Script" path="res://src/world/sky.gd" id="9_sky"]
+[ext_resource type="Shader" path="res://src/world/sky.gdshader" id="10_sky_shader"]
+[ext_resource type="Shader" path="res://src/world/vignette.gdshader" id="11_vignette_shader"]
+[ext_resource type="Script" path="res://src/world/exit_marker.gd" id="12_exit"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("10_sky_shader")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
+shader = ExtResource("11_vignette_shader")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_checkpoint"]
+size = Vector2(40, 300)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(60, 300)
+
+[node name="PrototypeLevel" type="Node2D"]
+script = ExtResource("1_level")
+
+[node name="SkyLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Sky" type="ColorRect" parent="SkyLayer"]
+material = SubResource("ShaderMaterial_sky")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("9_sky")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Far" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.2, 0.2)
+
+[node name="Trees" type="Node2D" parent="Background/Far"]
+z_index = -50
+position = Vector2(0, 307)
+script = ExtResource("7_forest")
+tone = 0
+span = Vector2(-400, 2600)
+tree_gap = Vector2(45, 110)
+tree_height = Vector2(380, 520)
+trunk_width = Vector2(4, 8)
+tree_style = 1
+ground_wave = 8.0
+fog_strength = 0.4
+fog_height = 140.0
+layer_seed = 11
+
+[node name="Mid" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.4, 0.4)
+
+[node name="Trees" type="Node2D" parent="Background/Mid"]
+z_index = -40
+position = Vector2(0, 242)
+script = ExtResource("7_forest")
+span = Vector2(-400, 3400)
+tree_gap = Vector2(80, 170)
+tree_height = Vector2(330, 470)
+trunk_width = Vector2(6, 12)
+ground_wave = 12.0
+fog_strength = 0.3
+layer_seed = 23
+
+[node name="Near" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.65, 0.65)
+
+[node name="Trees" type="Node2D" parent="Background/Near"]
+z_index = -30
+position = Vector2(0, 148)
+script = ExtResource("7_forest")
+tone = 2
+span = Vector2(-400, 4300)
+tree_gap = Vector2(170, 320)
+tree_height = Vector2(420, 600)
+trunk_width = Vector2(12, 22)
+ground_wave = 10.0
+fog_strength = 0.18
+fog_height = 80.0
+layer_seed = 37
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Ground" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(-700, 0, -300, -2, -100, 1, 60, 0, 180, 3, 330, -1, 480, 1, 700, 0, 780, -3, 860, -40, 930, -45, 1010, -43, 1080, -40, 1110, -8, 1132, 28, 1180, 32, 1228, 28, 1246, 4, 1268, 0, 3560, 0, 3640, -10, 4800, -10, 4800, 1200, -700, 1200)
+script = ExtResource("6_terrain")
+grass_seed = 1
+
+[node name="LeftTrunk" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(-230, 6, -192, -30, -180, -200, -170, -420, -182, -620, -168, -820, -108, -820, -122, -600, -112, -400, -118, -200, -104, -30, -62, 6)
+script = ExtResource("6_terrain")
+grass_density = 0.0
+
+[node name="Rock" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(356, 2, 362, -12, 374, -20, 390, -18, 400, -8, 404, 2)
+script = ExtResource("6_terrain")
+grass_seed = 2
+
+[node name="Log1" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(556, 3, 552, -12, 558, -26, 572, -33, 600, -35, 650, -34, 676, -31, 688, -22, 690, -8, 684, 3)
+script = ExtResource("6_terrain")
+grass_density = 0.12
+grass_height = Vector2(3, 7)
+grass_seed = 3
+
+[node name="Stump1" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(1296, 3, 1304, -6, 1308, -38, 1314, -46, 1322, -42, 1330, -47, 1340, -43, 1348, -46, 1352, -38, 1354, -6, 1362, 3)
+script = ExtResource("6_terrain")
+grass_density = 0.0
+
+[node name="Stump2" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(1422, 3, 1430, -8, 1432, -74, 1438, -81, 1448, -78, 1458, -82, 1468, -79, 1476, -80, 1482, -74, 1486, -8, 1490, 3)
+script = ExtResource("6_terrain")
+grass_density = 0.0
+
+[node name="Ledge" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(1478, 3, 1486, -70, 1490, -100, 1502, -110, 1540, -115, 1590, -113, 1630, -116, 1652, -106, 1660, -60, 1668, 3)
+script = ExtResource("6_terrain")
+grass_seed = 4
+
+[node name="Log2" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(2576, 3, 2572, -10, 2578, -24, 2592, -30, 2640, -31, 2668, -28, 2680, -18, 2682, -6, 2676, 3)
+script = ExtResource("6_terrain")
+grass_density = 0.12
+grass_height = Vector2(3, 7)
+grass_seed = 5
+
+[node name="RightTrunk" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(4540, -4, 4582, -40, 4594, -210, 4586, -420, 4596, -620, 4584, -820, 4648, -820, 4636, -600, 4646, -400, 4640, -210, 4656, -40, 4700, -4)
+script = ExtResource("6_terrain")
+grass_density = 0.0
+
+[node name="ExitMarker" type="Node2D" parent="."]
+z_index = -5
+position = Vector2(4440, -10)
+script = ExtResource("12_exit")
+
+[node name="Hints" type="Node2D" parent="."]
+
+[node name="Move" type="Label" parent="Hints"]
+offset_left = -10.0
+offset_top = -200.0
+offset_right = 290.0
+offset_bottom = -170.0
+theme_override_font_sizes/font_size = 16
+text = "move  ·  A / D"
+
+[node name="Jump" type="Label" parent="Hints"]
+offset_left = 300.0
+offset_top = -200.0
+offset_right = 600.0
+offset_bottom = -170.0
+theme_override_font_sizes/font_size = 16
+text = "jump  ·  Space"
+
+[node name="Hide" type="Label" parent="Hints"]
+offset_left = 1500.0
+offset_top = -330.0
+offset_right = 1900.0
+offset_bottom = -300.0
+theme_override_font_sizes/font_size = 16
+text = "crouch under cover to hide  ·  S"
+
+[node name="Covers" type="Node2D" parent="."]
+
+[node name="BushA" type="Node2D" parent="Covers"]
+z_index = 5
+position = Vector2(2080, 0)
+script = ExtResource("5_cover")
+shape_seed = 3
+
+[node name="LowBranches" type="Node2D" parent="Covers"]
+z_index = 5
+position = Vector2(3000, 0)
+script = ExtResource("5_cover")
+style = 1
+width = 140.0
+shape_seed = 5
+
+[node name="BushB" type="Node2D" parent="Covers"]
+z_index = 5
+position = Vector2(3320, 0)
+script = ExtResource("5_cover")
+width = 120.0
+shape_seed = 8
+
+[node name="BushC" type="Node2D" parent="Covers"]
+z_index = 5
+position = Vector2(3880, -10)
+script = ExtResource("5_cover")
+shape_seed = 13
+
+[node name="Creatures" type="Node2D" parent="."]
+
+[node name="Creature1" parent="Creatures" instance=ExtResource("4_creature")]
+position = Vector2(2200, 0)
+patrol_left = -300.0
+patrol_right = 300.0
+
+[node name="Creature2" parent="Creatures" instance=ExtResource("4_creature")]
+position = Vector2(3180, 0)
+patrol_left = -300.0
+patrol_right = 300.0
+start_facing = 1
+
+[node name="Creature3" parent="Creatures" instance=ExtResource("4_creature")]
+position = Vector2(3940, -10)
+patrol_left = -180.0
+patrol_right = 180.0
+start_facing = 1
+patrol_speed = 68.0
+
+[node name="Dog" parent="." instance=ExtResource("3_dog")]
+position = Vector2(-6, 0)
+
+[node name="Girl" parent="." instance=ExtResource("2_girl")]
+position = Vector2(40, -1)
+
+[node name="Camera" type="Camera2D" parent="Girl"]
+offset = Vector2(0, -140)
+limit_left = -260
+limit_top = -1200
+limit_right = 4700
+limit_bottom = 420
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
+
+[node name="Spores" type="CPUParticles2D" parent="Girl/Camera"]
+z_index = 10
+position = Vector2(0, -140)
+amount = 70
+lifetime = 12.0
+preprocess = 12.0
+local_coords = false
+emission_shape = 3
+emission_rect_extents = Vector2(800, 420)
+direction = Vector2(1, -0.2)
+spread = 180.0
+gravity = Vector2(0, 3)
+initial_velocity_min = 4.0
+initial_velocity_max = 14.0
+scale_amount_min = 1.0
+scale_amount_max = 2.6
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="AfterLedge" type="Area2D" parent="Checkpoints"]
+position = Vector2(1700, -2)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="Checkpoints/AfterLedge"]
+position = Vector2(0, -150)
+shape = SubResource("RectangleShape2D_checkpoint")
+
+[node name="AfterFirstCreature" type="Area2D" parent="Checkpoints"]
+position = Vector2(2700, -2)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="Checkpoints/AfterFirstCreature"]
+position = Vector2(0, -150)
+shape = SubResource("RectangleShape2D_checkpoint")
+
+[node name="AfterSecondCreature" type="Area2D" parent="Checkpoints"]
+position = Vector2(3650, -12)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="Checkpoints/AfterSecondCreature"]
+position = Vector2(0, -150)
+shape = SubResource("RectangleShape2D_checkpoint")
+
+[node name="Exit" type="Area2D" parent="."]
+position = Vector2(4360, -10)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="Exit"]
+position = Vector2(0, -150)
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="Foreground" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.25, 1)
+
+[node name="Framing" type="Node2D" parent="Foreground"]
+z_index = 20
+script = ExtResource("8_foreground")
+span = Vector2(-600, 6300)
+grass_y = 270.0
+canopy_y = -530.0
+
+[node name="Overlay" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Vignette" type="ColorRect" parent="Overlay"]
+material = SubResource("ShaderMaterial_vignette")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Fade" type="ColorRect" parent="Overlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Message" type="Label" parent="Overlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+vertical_alignment = 1

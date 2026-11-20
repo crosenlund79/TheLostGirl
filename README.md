@@ -1,5 +1,14 @@
 # Godot / Claude Starter Pack — v1.2
 
+## Current prototype: silhouette horror forest
+
+A small playable prototype (not a full game): a little girl with a teddy bear and her dog cross a dark silhouette forest, hiding from hunched creatures by crouching under bushes and low branches. Design record: `docs/PROJECT_BRIEF.md`.
+
+- **Run:** open the folder in **Godot 4.7** (Import → `project.godot`) and press **F5** (main scene: `src/level/prototype_level.tscn`). Or from a terminal: `godot --path .`
+- **Controls:** move **A/D** or **←/→** · jump **Space**/**W**/**↑** · crouch **S**/**↓** (gamepad: stick/d-pad + A). Crouch *fully* under cover to hide. Touching a creature while visible returns you to the last checkpoint.
+- **Tests (GUT, headless):** `godot --headless --import`, then `godot --headless -s addons/gut/gut_cmdln.gd`
+- **Tuning:** colours in `src/style/palette.gd`; creature patrol/speed/sight and cover size are exported on the nodes in the level scene.
+
 Reusable **development instructions and design conventions** for future Godot 4 projects; this is **not a game, a functioning asset loader, or an implemented test framework**. We improve this pack with the user, ChatGPT and Claude before promoting a reviewed version to `main`.
 
 ## Contents
