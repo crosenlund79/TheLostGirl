@@ -12,6 +12,7 @@
 [ext_resource type="Shader" path="res://src/world/sky.gdshader" id="10_sky_shader"]
 [ext_resource type="Shader" path="res://src/world/vignette.gdshader" id="11_vignette_shader"]
 [ext_resource type="Script" path="res://src/world/exit_marker.gd" id="12_exit"]
+[ext_resource type="Script" path="res://src/audio/forest_audio.gd" id="13_audio"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
 shader = ExtResource("10_sky_shader")
@@ -307,6 +308,9 @@ script = ExtResource("8_foreground")
 span = Vector2(-600, 6300)
 grass_y = 270.0
 canopy_y = -530.0
+
+[node name="ForestAudio" type="Node" parent="."]
+script = ExtResource("13_audio")
 
 [node name="Overlay" type="CanvasLayer" parent="."]
 layer = 10

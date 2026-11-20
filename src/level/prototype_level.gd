@@ -22,6 +22,7 @@ var _hidden_amount := 0.0
 func _ready() -> void:
 	_respawn_point = _girl.global_position
 	_dog.set_target(_girl)
+	$ForestAudio.target = _girl
 	for creature in get_creatures():
 		creature.target = _girl
 		creature.caught_player.connect(_on_caught)

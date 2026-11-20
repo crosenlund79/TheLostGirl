@@ -8,6 +8,7 @@ A small playable prototype (not a full game): a little girl with a teddy bear an
 - **Controls:** move **A/D** or **←/→** · jump **Space**/**W**/**↑** · crouch **S**/**↓** (gamepad: stick/d-pad + A). Crouch *fully* under cover to hide. Touching a creature while visible returns you to the last checkpoint.
 - **Tests (GUT, headless):** `godot --headless --import`, then `godot --headless -s addons/gut/gut_cmdln.gd`
 - **Tuning:** colours in `src/style/palette.gd`; creature patrol/speed/sight and cover size are exported on the nodes in the level scene.
+- **Audio:** music, ambience and random forest disturbances play on the **Music**, **Ambience** and **Disturbances** buses. Adjust their volumes in Godot's *Audio* panel (bottom of the editor) or in code with `ForestAudio.set_bus_volume_linear(&"Music", 0.7)`. Disturbance timing and spread are exported on the level's `ForestAudio` node. To replace a sound without rebuilding, drop an OGG/WAV with the same logical name into `custom/audio/`, e.g. `custom/audio/music/lost_in_the_fog.ogg`, then restart the game. Original uploads are kept in `assets/_inbox/`.
 
 Reusable **development instructions and design conventions** for future Godot 4 projects; this is **not a game, a functioning asset loader, or an implemented test framework**. We improve this pack with the user, ChatGPT and Claude before promoting a reviewed version to `main`.
 

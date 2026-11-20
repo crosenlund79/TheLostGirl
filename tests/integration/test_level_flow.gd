@@ -19,6 +19,7 @@ func before_each() -> void:
 func test_level_wires_dog_creatures_and_cover() -> void:
 	await wait_physics_frames(2)
 	assert_eq(level.get_node("Dog").target, girl)
+	assert_eq(level.get_node("ForestAudio").target, girl, "disturbances happen around the girl")
 	var creatures: Array[Creature] = level.get_creatures()
 	assert_eq(creatures.size(), 3)
 	for creature in creatures:
