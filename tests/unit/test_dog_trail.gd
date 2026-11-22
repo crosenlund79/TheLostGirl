@@ -21,8 +21,13 @@ func test_distance_beyond_the_trail_clamps_to_oldest_point() -> void:
 
 func test_tiny_moves_are_not_recorded() -> void:
 	trail.reset(Vector2.ZERO)
-	trail.record(Vector2(1, 0))
+	assert_eq(trail.record(Vector2(1, 0)), 0.0)
 	assert_eq(trail.point_count(), 1)
+
+
+func test_record_reports_how_much_the_trail_grew() -> void:
+	trail.reset(Vector2.ZERO)
+	assert_almost_eq(trail.record(Vector2(6, 8)), 10.0, 0.001)
 
 
 func test_follow_point_tracks_the_path_not_a_straight_line() -> void:

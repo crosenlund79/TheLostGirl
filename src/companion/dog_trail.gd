@@ -18,14 +18,17 @@ func reset(point: Vector2, behind: Vector2 = point) -> void:
 	_points.append(point)
 
 
-func record(point: Vector2) -> void:
+## Add her latest position. Returns how much the trail grew (0 if she barely moved).
+func record(point: Vector2) -> float:
 	if _points.is_empty():
 		_points.append(point)
-		return
-	if _points[-1].distance_to(point) < min_step:
-		return
+		return 0.0
+	var step := _points[-1].distance_to(point)
+	if step < min_step:
+		return 0.0
 	_points.append(point)
 	_prune()
+	return step
 
 
 func point_behind(distance: float) -> Vector2:
