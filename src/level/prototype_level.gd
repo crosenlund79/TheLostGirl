@@ -13,7 +13,7 @@ var _hidden_amount := 0.0
 
 @onready var _girl: Girl = $Girl
 @onready var _dog: Dog = $Dog
-@onready var _camera: Camera2D = $Girl/Camera
+@onready var _camera: TensionCamera = $Girl/Camera
 @onready var _vignette: ColorRect = $Overlay/Vignette
 @onready var _fade: ColorRect = $Overlay/Fade
 @onready var _message: Label = $Overlay/Message
@@ -26,6 +26,7 @@ func _ready() -> void:
 	for creature in get_creatures():
 		creature.target = _girl
 		creature.caught_player.connect(_on_caught)
+	_camera.watch(_girl, get_creatures())
 	for checkpoint in $Checkpoints.get_children():
 		checkpoint.body_entered.connect(_on_checkpoint_entered.bind(checkpoint))
 	$Exit.body_entered.connect(_on_exit_entered)
@@ -79,7 +80,7 @@ func _respawn() -> void:
 	for creature in get_creatures():
 		creature.reset()
 	_dog.snap_to_target()
-	_camera.reset_smoothing()
+	_camera.snap()
 
 
 func _on_exit_entered(body: Node2D) -> void:

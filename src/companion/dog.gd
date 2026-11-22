@@ -4,8 +4,8 @@ extends Node2D
 ## behind her (closer when she crouches, so it hides with her), and never
 ## collides with anything, so it can't block gameplay. Enemies ignore it.
 
-@export var follow_distance := 46.0
-@export var crouch_follow_distance := 14.0
+@export var follow_distance := 60.0
+@export var crouch_follow_distance := 4.0
 @export var max_speed := 240.0
 ## Teleport instead of running if the gap ever gets this large (e.g. respawn).
 @export var snap_distance := 420.0

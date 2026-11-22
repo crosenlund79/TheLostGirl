@@ -71,3 +71,19 @@ func test_crouching_outside_cover_gets_caught() -> void:
 	assert_false(girl.is_hidden(), "crouching alone does not hide her")
 	await wait_until(_caught, 8.0)
 	assert_signal_emitted(creature, "caught_player")
+
+
+func test_camera_pushes_in_when_a_creature_sniffs_at_her_hiding_place() -> void:
+	var camera := TensionCamera.new()
+	girl.add_child(camera)
+	camera.make_current()
+	camera.watch(girl, [creature])
+	assert_almost_eq(camera.zoom.x, camera.base_zoom, 0.001)
+	Input.action_press("crouch")
+	var sniffing := func() -> bool: return creature.brain.state == CreatureBrain.State.SNIFF
+	assert_true(await wait_until(sniffing, 8.0), "the creature stops to sniff at the bush")
+	await wait_seconds(camera.zoom_in_time * 0.8)
+	assert_gt(camera.zoom.x, camera.base_zoom * 1.05, "camera closes in on the hiding place")
+	assert_true(girl.is_hidden())
+	assert_signal_not_emitted(creature, "caught_player")
+

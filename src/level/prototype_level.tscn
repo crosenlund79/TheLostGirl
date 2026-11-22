@@ -13,6 +13,7 @@
 [ext_resource type="Shader" path="res://src/world/vignette.gdshader" id="11_vignette_shader"]
 [ext_resource type="Script" path="res://src/world/exit_marker.gd" id="12_exit"]
 [ext_resource type="Script" path="res://src/audio/forest_audio.gd" id="13_audio"]
+[ext_resource type="Script" path="res://src/level/tension_camera.gd" id="14_camera"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
 shader = ExtResource("10_sky_shader")
@@ -232,13 +233,13 @@ position = Vector2(-6, 0)
 position = Vector2(40, -1)
 
 [node name="Camera" type="Camera2D" parent="Girl"]
-offset = Vector2(0, -140)
 limit_left = -260
 limit_top = -1200
 limit_right = 4700
 limit_bottom = 420
 position_smoothing_enabled = true
 position_smoothing_speed = 4.0
+script = ExtResource("14_camera")
 
 [node name="Spores" type="CPUParticles2D" parent="Girl/Camera"]
 z_index = 10
@@ -306,8 +307,8 @@ scroll_scale = Vector2(1.25, 1)
 z_index = 20
 script = ExtResource("8_foreground")
 span = Vector2(-600, 6300)
-grass_y = 270.0
-canopy_y = -530.0
+grass_y = 300.0
+canopy_y = -400.0
 
 [node name="ForestAudio" type="Node" parent="."]
 script = ExtResource("13_audio")
